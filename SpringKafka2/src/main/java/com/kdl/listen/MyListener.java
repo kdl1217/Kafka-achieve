@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.listener.ConsumerAwareListenerErrorHandler;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,8 +26,9 @@ public class MyListener {
     @Autowired
     private KafkaTemplate<String,byte[]> template ;
 
-    //声明consumerID为demo，监听topicName为topic.quick.demo的Topic
+    //声明consumerID为id0，监听topicName为kong的Topic
     @KafkaListener(id = "id0",topics = Constant.Topic.KONG, errorHandler = "consumerAwareErrorHandler")
+//    @SendTo
     public void listen(byte[] msgData) {
         log.info("receive : "+ HexStringUtil.toHexString(msgData));
         throw new RuntimeException("fail") ;

@@ -15,5 +15,6 @@ public interface Constant {
 
         String TEST = "test" ;
 
+        String REPLY = "reply" ;
     }
 }

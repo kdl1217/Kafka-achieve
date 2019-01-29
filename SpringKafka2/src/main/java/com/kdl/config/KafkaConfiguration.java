@@ -2,6 +2,7 @@ package com.kdl.config;
 
 import com.github.io.protocol.utils.HexStringUtil;
 import com.kdl.listen.KafkaSendResultListener;
+import common.Constant;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -20,8 +21,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
-import org.springframework.kafka.listener.adapter.RecordFilterStrategy;
-import org.springframework.kafka.transaction.KafkaTransactionManager;
+import org.springframework.kafka.listener.ContainerProperties;
+import org.springframework.kafka.listener.KafkaMessageListenerContainer;
+import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,6 +57,7 @@ public class KafkaConfiguration {
     public ConcurrentKafkaListenerContainerFactory<String, byte[]> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, byte[]> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+        factory.setReplyTemplate(kafkaTemplate());
         /**
          * 过滤器
          * 配合RecordFilterStrategy使用，被过滤的信息将被丢弃
@@ -128,6 +131,19 @@ public class KafkaConfiguration {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ByteArrayDeserializer.class);
         return props;
     }
+
+//    @Bean
+//    public KafkaMessageListenerContainer<String, String> replyContainer(@Autowired ConsumerFactory consumerFactory) {
+//        ContainerProperties containerProperties = new ContainerProperties(Constant.Topic.REPLY);
+//        return new KafkaMessageListenerContainer<>(consumerFactory, containerProperties);
+//    }
+//
+//    @Bean
+//    public ReplyingKafkaTemplate<String, String, String> replyingKafkaTemplate(@Autowired ProducerFactory producerFactory, KafkaMessageListenerContainer replyContainer) {
+//        ReplyingKafkaTemplate template = new ReplyingKafkaTemplate<>(producerFactory, replyContainer);
+//        template.setReplyTimeout(10000);
+//        return template;
+//    }
 
     /**
      * 生产者配置

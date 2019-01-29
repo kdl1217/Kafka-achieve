@@ -69,9 +69,11 @@ public class KConsumer {
         // 该地址是集群的子集，用来探测集群。 bootstrap.servers
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.31.138:9092,192.168.31.139:9092,192.168.31.140:9092");
         // cousumer的分组id group.id
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "kong-1");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "kong-2");
         // 自动提交offsets enable.auto.commit
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
+        // 自动提交设置提交时间间隔
+        props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
         // 设置使用最开始的offset偏移量为该group.id的最早。如果不设置，则会是latest即该topic最新一个消息的offset
         // 如果采用latest，消费者只能得道其启动后，生产者生产的消息 auto.offset.reset
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");

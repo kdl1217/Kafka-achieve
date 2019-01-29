@@ -1,0 +1,6 @@
+# Spring settings
+spring:
+    profiles.active: dev
+
+    kafka:
+        bootstrap-servers: 127.0.0.1:9092,127.0.0.1:9092,127.0.0.1:9092

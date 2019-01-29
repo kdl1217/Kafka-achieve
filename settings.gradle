@@ -1,0 +1,6 @@
+rootProject.name = 'Kafka-achieve'
+include 'NativeKafka'
+include 'SpringKafka'
+include 'shared'
+include 'SpringKafka2'
+
